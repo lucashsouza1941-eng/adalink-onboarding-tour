@@ -786,11 +786,27 @@ function adaraMatch(txt){
   return 'Boa pergunta! Neste protótipo eu explico os módulos principais — agentes, memória, integrações, conhecimento, créditos, segurança, processos, analytics e squads. No produto real, eu busco a resposta nos seus dados e executo ações para você. Tente, por exemplo: "como crio um agente?".';
 }
 const ADARA_SUGG=['O que é a Adaflow?','Como crio um agente?','O que é a Memória?','Como conecto uma integração?','O que são créditos?'];
-function renderAdaraSugg(){ document.getElementById('adr-sugg').innerHTML=ADARA_SUGG.map(function(q){return '<button class="achip" onclick="askAdara(\''+q+'\')">'+q+'</button>';}).join(''); }
+/* Sugestões contextuais por módulo (Frente 4) — usam palavras que a adaraMatch já responde */
+const SUGG_BY_MOD={
+  memoria:['Como importo memórias de outra IA?','Para que serve a Memória?'],
+  agentes:['Como crio um agente?','Como funciona o assistente de IA?'],
+  processos:['Como monto um processo?','O que é um workflow?'],
+  conhecimentos:['Como subo um documento?','O que é uma base de conhecimento?'],
+  integracoes:['Como conecto o Gmail?','Como crio uma API Key?'],
+  creditos:['Como funcionam os créditos?','Onde vejo o custo?'],
+  analytics:['O que vejo no Analytics?','Como acompanho as métricas?'],
+  squads:['O que é um squad?','Para que serve um squad?'],
+  roles:['Como funcionam as permissões?','Como controlo o acesso?']
+};
+function renderAdaraSugg(){
+  var ctx=SUGG_BY_MOD[current]||[], list=ctx.slice();
+  ADARA_SUGG.forEach(function(q){ if(list.indexOf(q)<0 && list.length<5) list.push(q); });
+  document.getElementById('adr-sugg').innerHTML=list.map(function(q){return '<button class="achip" onclick="askAdara(\''+q+'\')">'+q+'</button>';}).join('');
+}
 function openAdara(){
   const d=document.getElementById('adrawer');d.classList.add('open');
   const body=document.getElementById('adr-body');
-  if(!body.innerHTML){ body.innerHTML='<div class="amsg b">Oi! Sou a <b>Adara</b>, a assistente da Adaflow. Posso explicar qualquer módulo da plataforma e ajudar você a começar. Toque numa sugestão abaixo ou escreva a sua pergunta.</div>'; }
+  if(!body.innerHTML){ body.innerHTML='<div class="amsg b">Oi! Eu sou a <b>Adara</b> 👋 Vi que você está em <b>'+byId[current].name+'</b> — posso explicar esta e qualquer outra tela, ou te dar uma mãozinha nos primeiros passos. Toque numa sugestão abaixo ou me escreva.</div>'; }
   renderAdaraSugg();
   setTimeout(function(){var i=document.getElementById('adr-input');if(i)i.focus();},420);
 }
