@@ -14,3 +14,6 @@ dist/
 # Ambiente
 .env
 .env.local
+
+# Claude Code (config pessoal, não versionar)
+.claude/settings.local.json
