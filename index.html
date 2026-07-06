@@ -298,6 +298,17 @@ tbody tr:last-child td{border-bottom:none}
 .ov-link{font-size:12.5px;font-weight:600;color:var(--brand-ink);text-decoration:underline;padding:6px}
 .tlink{font-size:11.5px;color:var(--muted);font-weight:600;margin-right:auto;padding:4px 2px}
 .tlink:hover{color:var(--text-2)}
+/* --- Micro-animações + conclusão (Frente 2) --- */
+.content.fx{animation:cfade .32s ease}
+@keyframes cfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;border-radius:14px}
+.confetti i{position:absolute;top:-16px;width:8px;height:13px;border-radius:2px;animation:confall linear forwards}
+@keyframes confall{to{transform:translateY(720px) rotate(720deg)}}
+.ov-card{z-index:2}
+@media (prefers-reduced-motion: reduce){
+  .spot,.spot::after,.tip,.ov,.ov-card,.content.fx,.toast,.adrawer,.atyping i,.adara-fab{animation:none!important;transition:none!important}
+  .confetti{display:none!important}
+}
 </style>
 </head>
 <body>
@@ -343,6 +354,18 @@ tbody tr:last-child td{border-bottom:none}
             <button class="ov-btn ghost" onclick="closeWelcome()">Explorar sozinho</button>
           </div>
           <div class="ov-resume" id="ov-resume"></div>
+        </div>
+      </div>
+      <div class="ov" id="finish">
+        <div class="confetti" id="confetti"></div>
+        <div class="ov-card">
+          <div class="ov-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0zM7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3"/></svg></div>
+          <h2>Tour concluído! 🎉</h2>
+          <p>Você já passou por todas as telas da Adaflow. Que tal dar o primeiro passo de verdade e criar o seu primeiro agente?</p>
+          <div class="ov-actions">
+            <button class="ov-btn primary" onclick="gotoAgentes()">Criar meu primeiro agente</button>
+            <button class="ov-btn ghost" onclick="closeFinish()">Explorar sozinho</button>
+          </div>
         </div>
       </div>
       <div class="tour" id="tour"><div class="veil"></div><div class="spot" id="spot"></div><div class="tip" id="tip"><button class="tskip" onclick="pauseTour()">Pausar</button><div id="tip-body"></div></div></div>
@@ -626,7 +649,8 @@ function renderModule(m){
   let h='<div class="mhead"><div class="eb">'+m.sec+'</div><div class="row"><div class="mi" style="background:'+m.color+'">'+sic(m.icon)+'</div><div><h1>'+m.name+' <span class="info">'+sic('info')+'</span></h1><p class="desc">'+m.desc+'</p></div></div></div>';
   if(m.views.length>1){ h+='<div class="tabsbar" data-tt="__tabs">'+m.views.map(function(vv){return '<button class="tbtn '+(vv.id===vId?'active':'')+'" onclick="setView(\''+m.id+'\',\''+vv.id+'\')">'+sic(vv.icon)+vv.name+'</button>';}).join('')+'</div>'; }
   h+=v.blocks.map(C).join('');
-  document.getElementById('content').innerHTML=h;
+  var cel=document.getElementById('content'); cel.innerHTML=h;
+  cel.classList.remove('fx'); void cel.offsetWidth; cel.classList.add('fx');
 }
 function setView(mId,vId){
   activeView[mId]=vId; renderModule(byId[mId]);
@@ -651,7 +675,22 @@ function resumeTour(){ var s=loadTour(); closeWelcome(); startTour(s&&s.step?s.s
 function restartTour(){ beginTour(); }
 function pauseTour(){ saveTour(curStep,false); endTour(); toast('&#9208;&#65039; Tour pausado — retome pelo &#8220;?&#8221; no topo.'); }
 function skipTour(){ saveTour(curStep,true); endTour(); }
-function finishTour(){ saveTour(STEPS.length-1,true); endTour(); toast('&#127881; Tour concluído! Você entrou em cada tela da Adaflow.'); }
+function finishTour(){ saveTour(STEPS.length-1,true); endTour(); var f=document.getElementById('finish'); if(f){ f.classList.add('show'); confetti(); } }
+function closeFinish(){ document.getElementById('finish').classList.remove('show'); }
+function gotoAgentes(){ closeFinish(); activeTab='inteligencia'; current='agentes'; activeView['agentes']='conversa'; renderRail(); renderMenu(); renderModule(byId['agentes']); }
+function confetti(){
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c=document.getElementById('confetti'); if(!c) return; c.innerHTML='';
+  var cols=['#7c3aed','#ec4899','#8b5cf6','#22c55e','#f59e0b','#06b6d4'];
+  for(var i=0;i<64;i++){ var p=document.createElement('i');
+    p.style.left=(Math.random()*100)+'%';
+    p.style.background=cols[i%cols.length];
+    p.style.animationDuration=(1.6+Math.random()*1.8)+'s';
+    p.style.animationDelay=(Math.random()*0.5)+'s';
+    p.style.opacity=(0.7+Math.random()*0.3).toFixed(2);
+    c.appendChild(p);
+  }
+}
 function goStep(i){
   if(i<0||i>=STEPS.length) return;
   curStep=i; saveTour(i,false); const s=STEPS[i], m=byId[s.m];
