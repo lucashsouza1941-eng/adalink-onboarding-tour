@@ -309,6 +309,27 @@ tbody tr:last-child td{border-bottom:none}
   .spot,.spot::after,.tip,.ov,.ov-card,.content.fx,.toast,.adrawer,.atyping i,.adara-fab{animation:none!important;transition:none!important}
   .confetti{display:none!important}
 }
+/* --- Teclado + responsivo (Frente 3) --- */
+button:focus-visible,.mitem:focus-visible,.rtab:focus-visible,.achip:focus-visible,.scard:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--brand-500);outline-offset:2px;border-radius:8px}
+@media (max-width:768px){
+  .wrap{padding:8px 8px 22px}
+  .proto-top{flex-wrap:wrap;gap:6px 10px}
+  .proto-hint{order:3;margin:0;flex-basis:100%;font-size:11.5px}
+  .restart{margin-left:auto}
+  .app{height:calc(100vh - 150px);min-height:480px}
+  .rail{width:46px;padding-top:64px;gap:6px}
+  .rtab{width:34px;height:34px}
+  .rtab svg{width:18px;height:18px}
+  .menu{width:150px}
+  .content{padding:16px 12px}
+  .cards{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .memcards{grid-template-columns:1fr}
+  .mhead h1{font-size:19px}
+  .adrawer{width:100%}
+  .tip{width:calc(100vw - 28px);max-width:340px;padding:14px}
+  .tip h3{font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -639,7 +660,7 @@ function renderRail(){
 }
 function renderMenu(){
   const items=M.filter(m=>m.tab===activeTab);let html='',last=null;
-  items.forEach(function(m){ if(m.sec!==last){html+='<div class="sec-label">'+m.sec+'</div>';last=m.sec;} html+='<div class="mitem '+(m.id===current?'active':'')+'" data-mod="'+m.id+'" onclick="jumpTo(\''+m.id+'\')">'+sic(m.icon)+'<span>'+m.name+'</span></div>'; });
+  items.forEach(function(m){ if(m.sec!==last){html+='<div class="sec-label">'+m.sec+'</div>';last=m.sec;} html+='<div class="mitem '+(m.id===current?'active':'')+'" data-mod="'+m.id+'" tabindex="0" onclick="jumpTo(\''+m.id+'\')" onkeydown="if(event.key===\'Enter\'){event.preventDefault();jumpTo(\''+m.id+'\')}">'+sic(m.icon)+'<span>'+m.name+'</span></div>'; });
   html+='<div class="mitem ext">'+sic('doc')+'<span>Documentação</span></div>';
   document.getElementById('menu').innerHTML=html;
 }
@@ -718,7 +739,7 @@ function placeTour(s){
     '<div class="tfoot"><button class="tlink" onclick="skipTour()">Pular tour</button><span class="prog">'+(curStep+1)+' / '+STEPS.length+'</span>'+
     '<button class="bprev" onclick="goStep('+(curStep-1)+')" '+(curStep===0?'disabled':'')+'>Anterior</button>'+
     '<button class="bnext" onclick="'+(isLast?'finishTour()':'goStep('+(curStep+1)+')')+'">'+(isLast?'Concluir 🎉':'Próximo')+(isLast?'':' '+ARR)+'</button></div>';
-  const tip=document.getElementById('tip'); const tipW=340, tipH=tip.offsetHeight||300;
+  const tip=document.getElementById('tip'); const tipW=tip.offsetWidth||340, tipH=tip.offsetHeight||300;
   let tx,ty; const gap=16;
   if(x+w+gap+tipW<=sr.width-10){ tx=x+w+gap; ty=Math.min(Math.max(12,y), sr.height-tipH-12); }
   else if(y+h+gap+tipH<=sr.height-8){ ty=y+h+gap; tx=Math.min(Math.max(12,x), sr.width-tipW-12); }
@@ -729,6 +750,23 @@ function placeTour(s){
 function toggleTheme(){ const d=document.documentElement.classList.toggle('dark'); document.getElementById('theme-ico').innerHTML=d?'<path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/>':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'; if(tourOn) setTimeout(function(){placeTour(STEPS[curStep]);},40); }
 let tt2;function toast(m){const e=document.getElementById('toast');document.getElementById('toast-msg').innerHTML=m;e.classList.add('show');clearTimeout(tt2);tt2=setTimeout(function(){e.classList.remove('show');},3200);}
 let rz;window.addEventListener('resize',function(){if(tourOn){clearTimeout(rz);rz=setTimeout(function(){placeTour(STEPS[curStep]);},140);}});
+/* --- Navegação por teclado (Frente 3) --- */
+document.addEventListener('keydown',function(e){
+  var d=document.getElementById('adrawer'), w=document.getElementById('welcome'), f=document.getElementById('finish');
+  if(e.key==='Escape'){
+    if(d&&d.classList.contains('open')){ closeAdara(); return; }
+    if(f&&f.classList.contains('show')){ closeFinish(); return; }
+    if(w&&w.classList.contains('show')){ closeWelcome(); return; }
+    if(tourOn){ pauseTour(); }
+    return;
+  }
+  var tag=(e.target&&e.target.tagName||'').toLowerCase();
+  if(tag==='input'||tag==='textarea') return;
+  if(!tourOn) return;
+  if(e.key==='ArrowLeft'){ e.preventDefault(); if(curStep>0) goStep(curStep-1); return; }
+  if(e.key==='ArrowRight'){ e.preventDefault(); if(curStep<STEPS.length-1) goStep(curStep+1); else finishTour(); return; }
+  if(e.key==='Enter'){ if(tag==='button'||tag==='a'||(e.target&&e.target.getAttribute&&e.target.getAttribute('data-mod'))) return; e.preventDefault(); if(curStep<STEPS.length-1) goStep(curStep+1); else finishTour(); }
+});
 const ADARA_QA=[
  {k:['adaflow','plataforma','o que e','o que é','comecar','começar','inicio','início'],a:'A Adaflow é a plataforma de IA da Adalink: você cria agentes, monta automações (Processos), sobe conhecimento e conecta suas ferramentas — tudo num só lugar. Use a barra à esquerda para navegar entre Inteligência, Gestão e Empresa.'},
  {k:['agente','criar agente','novo agente','assistente'],a:'Para criar um agente, vá em Inteligência → Agentes e clique em "Novo agente". Escreva as instruções (o que ele faz e como fala), conecte uma base de Conhecimento e as Habilidades que ele pode usar, teste no chat e publique.'},
