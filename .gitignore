@@ -1,0 +1,16 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Dependências (caso adicione tooling no futuro)
+node_modules/
+dist/
+.cache/
+
+# Ambiente
+.env
+.env.local
