@@ -3,7 +3,7 @@
 Protótipo interativo de **onboarding guiado** da plataforma Adalink (Adaflow). Recria o shell real do produto (rail com as abas Inteligência / Gestão / Empresa, menu com os módulos reais, header e o assistente **Adara**) e oferece um tour que **entra em cada tela** e explica função por função.
 
 - **27 módulos** mapeados nas 3 abas.
-- **92 passos** de tour: cada módulo abre sua tela real, ativa as abas internas (ex.: Memória → Memórias / Mapa / Execuções) e destaca cada função (filtros, botões, KPIs, grafo, busca semântica...).
+- **105 passos** de tour: cada módulo abre sua tela real, ativa as abas internas (ex.: Memória → Memórias / Mapa / Execuções, Agentes → Especialistas / Conversa) e destaca cada função (busca, filtros, selos de status/modelo, botões, KPIs, grafo, busca semântica...).
 - **Chat da Adara**: clique no ícone de IA (canto inferior direito) para perguntar sobre a plataforma.
 - **Modo claro/escuro** e navegação livre (clique em qualquer módulo).
 

@@ -23,7 +23,7 @@ O app é **dirigido por dados**. Os dois pontos centrais no `<script>`:
 
 ### Tipos de bloco disponíveis (`t`)
 
-`stats`, `collapse`, `banner`, `toolbar`, `actions`, `cards`, `kpis`, `table`, `list`, `bigsearch`, `empty`, `memcards`, `chatpanel`, `nodes`, `graph`, `chart`, `flags`, `chat`. O renderizador é a função `C(b)`; blocos especiais têm helpers (`graphHTML`, `chatHTML`).
+`stats`, `collapse`, `banner`, `toolbar`, `actions`, `cards`, `kpis`, `table`, `list`, `bigsearch`, `empty`, `memcards`, `chatpanel`, `nodes`, `graph`, `chart`, `flags`, `chat`, `agents`. O renderizador é a função `C(b)`; blocos especiais têm helpers (`graphHTML`, `chatHTML`, `agentsHTML` — galeria de especialistas com `data-tt` internos `ag-search`, `ag-status`, `ag-tags`, `ag-tools`, `ag-count`, `ag-create`, `ag-card`, `ag-badge-status`, `ag-badge-model`, `ag-badge-vis`, `ag-pinned`, `ag-actions`).
 
 ### Como o tour se posiciona
 
