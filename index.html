@@ -35,7 +35,7 @@
 html,body{margin:0;padding:0}
 body{font-family:var(--font);background:var(--page);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-.wrap{max-width:1340px;margin:0 auto;padding:14px 16px 36px}
+.wrap{max-width:1600px;margin:0 auto;padding:14px 16px 24px}
 .proto-top{display:flex;align-items:center;gap:12px;padding:4px 4px 12px}
 .proto-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--text)}
 .proto-brand .m{width:30px;height:30px;border-radius:8px;background:linear-gradient(140deg,var(--brand),#ec4899);display:grid;place-items:center;color:#fff}
@@ -51,7 +51,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
 .frame-url{margin-left:10px;font-size:12px;color:var(--muted);background:var(--bg);border:1px solid var(--line);padding:3px 12px;border-radius:7px;font-family:var(--mono)}
 .stage{position:relative}
-.app{display:flex;height:680px;background:var(--bg)}
+.app{display:flex;height:calc(100vh - 150px);min-height:520px;background:var(--bg)}
 .appbar{position:absolute;top:0;left:0;right:0;height:56px;display:flex;align-items:center;gap:8px;padding:0 16px;background:var(--card);border-bottom:1px solid var(--line);z-index:6}
 .logo{display:flex;align-items:center;gap:9px;font-weight:700;font-size:18px;letter-spacing:-.02em}
 .logo .lm{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,var(--brand),#ec4899);display:grid;place-items:center;color:#fff}
@@ -316,7 +316,7 @@ button:focus-visible,.mitem:focus-visible,.rtab:focus-visible,.achip:focus-visib
   .proto-top{flex-wrap:wrap;gap:6px 10px}
   .proto-hint{order:3;margin:0;flex-basis:100%;font-size:11.5px}
   .restart{margin-left:auto}
-  .app{height:calc(100vh - 150px);min-height:480px}
+  .app{height:calc(100vh - 170px);min-height:440px}
   .rail{width:46px;padding-top:64px;gap:6px}
   .rtab{width:34px;height:34px}
   .rtab svg{width:18px;height:18px}
