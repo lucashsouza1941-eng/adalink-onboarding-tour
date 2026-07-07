@@ -513,7 +513,7 @@ function agentsHTML(b){
       '</div>'+
       (c.pin?'<span class="agpin"'+(f?' data-tt="ag-pinned"':'')+'>'+sic('pin')+'Fixado</span>':'')+
       '<div class="agmeta"><h4>'+c.t+'</h4><p>'+c.d+'</p><span class="agauthor">'+sic('users')+c.by+'</span></div>'+
-      '<div class="agfoot"'+(f?' data-tt="ag-actions"':'')+'><button class="agconv">'+sic('play')+'Conversar</button><button class="agib" aria-label="Fixar">'+sic('pin')+'</button><button class="agib" aria-label="Editar">'+sic('edit')+'</button><button class="agib" aria-label="Excluir">'+sic('trash')+'</button></div>'+
+      '<div class="agfoot"><button class="agconv"'+(f?' data-tt="ag-conversar"':'')+'>'+sic('play')+'Conversar</button><button class="agib" aria-label="Fixar"'+(f?' data-tt="ag-fixar"':'')+'>'+sic('pin')+'</button><button class="agib" aria-label="Editar"'+(f?' data-tt="ag-editar"':'')+'>'+sic('edit')+'</button><button class="agib" aria-label="Excluir"'+(f?' data-tt="ag-excluir"':'')+'>'+sic('trash')+'</button></div>'+
     '</div>';
   });
   return h+'</div>';
@@ -543,7 +543,10 @@ const M=[
     {target:'ag-badge-model',title:'O modelo de IA',text:'Aqui aparece o modelo que move o especialista — por exemplo claude-haiku-4.5, o4-mini ou "auto". O modo "auto" deixa a Adalink escolher o melhor modelo para cada tarefa.'},
     {target:'ag-badge-vis',title:'Visibilidade',text:'O ícone de olho mostra a visibilidade do especialista: privado, compartilhado com a organização ou publicado. É o seu controle de quem pode ver e usar cada agente.'},
     {target:'ag-pinned',title:'Fixado no topo',text:'O selo "Fixado" mantém um especialista no topo da lista, para você chegar nele com um clique. Ideal para os agentes que usa o dia inteiro.'},
-    {target:'ag-actions',title:'Conversar, fixar, editar, excluir',text:'Nos botões do card você entra na conversa com o agente, fixa/desafixa, edita as instruções ou exclui. Tudo o que você faz com um especialista começa aqui.'}
+    {target:'ag-conversar',title:'Conversar',text:'O botão Conversar abre o chat com aquele especialista — é onde você de fato usa o agente: pergunta, pede tarefas e recebe as respostas na hora.'},
+    {target:'ag-fixar',title:'Fixar no topo',text:'O alfinete fixa (ou desafixa) o especialista, mantendo-o no topo da lista para acesso rápido. Ideal para os agentes que você usa toda hora.'},
+    {target:'ag-editar',title:'Editar o especialista',text:'O lápis abre a edição do especialista: instruções, conhecimento vinculado, habilidades e o modelo de IA. É onde você ajusta o comportamento dele.'},
+    {target:'ag-excluir',title:'Excluir',text:'A lixeira remove o especialista de forma permanente. A plataforma pede confirmação antes, para você não apagar nada por engano.'}
    ],
    conversa:[
     {target:'ag-conv',title:'Histórico de conversas',text:'A coluna Conversas guarda todo o histórico de interações com o agente, organizado por data. Clique em qualquer item para retomar exatamente de onde parou, sem perder o contexto da conversa.'},
